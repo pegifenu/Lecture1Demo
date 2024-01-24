@@ -43,7 +43,7 @@
                 },
                 {
                     "name": "Flatten",
-                    "type": "Value",
+                    "type": "Button",
                     "id": "2443531c-611a-456f-9a45-7ca92eb0964a",
                     "expectedControlType": "Button",
                     "processors": "",
