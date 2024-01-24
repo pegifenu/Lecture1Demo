@@ -70,4 +70,15 @@ public class PlayerController : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
+
+    private bool isFlattened = false;
+    void OnFlatten()
+    {
+        if (!isFlattened)
+        {
+            transform.localScale = new Vector3(transform.localScale.x * 2, transform.localScale.y / 2, transform.localScale.z * 2);
+            isFlattened = true;
+        }
+        
+    }
 }
