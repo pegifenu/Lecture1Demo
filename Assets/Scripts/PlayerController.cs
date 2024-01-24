@@ -43,7 +43,9 @@ public class PlayerController : MonoBehaviour
     void OnJump()
     {
         if (isGrounded)
+        {
             Jump();
+        }
     }
 
     private void Jump()
@@ -51,19 +53,37 @@ public class PlayerController : MonoBehaviour
         rb.velocity = new Vector3(rb.velocity.x, jumpHeight, rb.velocity.z);
     }
 
-    void OnCollisionStay(Collision collision)
+    private void OnCollisionEnter(Collision collision)
     {
-        //check if angle between normal vector of object of contact and up vector is less than 45 degrees
-        //AKA if-statement is true if player is touching another object that is 0 to 45 degrees slope
-        if (Vector3.Angle(collision.GetContact(0).normal, Vector3.up) < 45f)
+        if (collision.gameObject.CompareTag("Ground"))
+        {
             isGrounded = true;
-        else
-            isGrounded = false;
+        }
     }
-
-    void OnCollisionExit(Collision collision)
+    
+    private void OnCollisionStay(Collision collision)
     {
-        isGrounded = false;
+        // Gets normal vector of current collision.
+        Vector3 norm = collision.GetContact(0).normal;
+
+        // If angle between normal vector and up vector is < 45 deg, then can jump up.
+        if (Vector3.Angle(norm, Vector3.up) < 45f)
+        {
+            isGrounded = true;
+        }
+
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = true;
+        }
+    }
+    
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = false;
+        }
     }
 
     private void Respawn()
